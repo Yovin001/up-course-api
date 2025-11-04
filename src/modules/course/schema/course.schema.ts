@@ -1,16 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Course extends Document {
   @Prop({ required: true })
   title: string;
 
-  @Prop()
+  @Prop({ required: true })
   description: string;
 
+  @Prop({ type: Types.ObjectId, ref: 'Entity', required: true })
+  author: Types.ObjectId;
+
   @Prop()
-  instructor: string;
+  duration: string;
+
+  @Prop()
+  level: string;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);

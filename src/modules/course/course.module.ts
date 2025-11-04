@@ -7,4 +7,4 @@ import { Course, CourseSchema } from './schema/course.schema';
   imports: [MongooseModule.forFeature([{ name: Course.name, schema: CourseSchema }])],
 
 })
-export class CoursesModule {}
+export class CourseModule {}
