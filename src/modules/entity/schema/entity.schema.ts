@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 @Schema({ _id: false })
 class Progression {
@@ -50,3 +51,14 @@ export class Entity extends Document {
 }
 
 export const EntitySchema = SchemaFactory.createForClass(Entity);
+
+
+EntitySchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
