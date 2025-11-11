@@ -42,4 +42,10 @@ export class EntityService {
       throw new InternalServerErrorException('Error al actualizar la entidad');
     }
   }
+
+  async findByEmail(email: string): Promise<Entity | null> {
+    return this.entityModel.findOne({ email }).exec();
+  }
+
+
 }
